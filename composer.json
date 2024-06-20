@@ -1,0 +1,24 @@
+{
+    "name": "saasscaleup/laravel-log-alarm",
+    "description": "Laravel log Alarm help you to set up alarm when errors occur in your system and send you a notification via Slack and email",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Saasscaleup\\LogAlarm\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel":{
+            "providers":[
+                "Saasscaleup\\LogAlarm\\LogAlarmServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Scale-Up SaaS",
+            "email": "saasscaleup@gmail.com"
+        }
+    ],
+    "require": {}
+}
