@@ -12,7 +12,7 @@ return [
     "log_time_frame" => env('LA_LOG_TIME_FRAME', 1),
 
     // log per time frame - How many log to count per time frame until alarm trigger 
-    "log_per_time_frame" => env('LA_LOG_PER_TIME_FRAME', 10),
+    "log_per_time_frame" => env('LA_LOG_PER_TIME_FRAME', 5),
 
     // delay between alarms in minutes - How many minutes to delay between alarms
     'delay_between_alarms' => env('LA_DELAY_BETWEEN_ALARMS', 5),

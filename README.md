@@ -93,7 +93,7 @@ Update your `.env` file with the following environment variables:
 LA_ENABLED=true
 LA_LOG_TYPE=error
 LA_LOG_TIME_FRAME=1
-LA_LOG_PER_TIME_FRAME=10
+LA_LOG_PER_TIME_FRAME=5
 LA_DELAY_BETWEEN_ALARMS=5
 LA_SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/webhook/url
 LA_NOTIFICATION_EMAIL=your-email@example.com
