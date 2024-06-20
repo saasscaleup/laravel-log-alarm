@@ -1,6 +1,6 @@
 ![Main Window two](https://github.com/saasscaleup/laravel-log-alarm/blob/master/lla-saasscaleup.png?raw=true)
 
-<h1 align="center">Real-time Log Monitoring and Notifications (Alarm) for Your Laravel Applications</h1>
+<h1 align="center">Real-time Log Monitoring and Error Detection for Your Laravel Applications</h1>
 
 <!--h4 align="center">
   <a href="https://youtube.com/@ScaleUpSaaS">Youtube</a>
