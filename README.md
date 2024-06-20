@@ -26,7 +26,7 @@
   </a>
 </p>
 
-# Log Listener for Laravel
+# Log Alarm for Laravel
 
 **Log Alarm** is a robust and easy-to-use Laravel package designed to enhance your application's logging capabilities. Whether you're running a small web app or a large enterprise system, Log Alarm helps you stay on top of your logs by providing real-time monitoring, error detection, and instant notifications via Slack and email.
 
