@@ -21,13 +21,13 @@ return [
     'specific_string' => env('LA_SPECIFIC_STRING', ''), // also possible: 'table lock' or 'foo' or 'bar' or leave empty '' to enable any word
 
     // notification message for log alarm
-    'notification_message' => env('LA_NOTIFICATION_MESSAGE', 'Log Alarm got triggered!'),
+    'notification_message' => env('LA_NOTIFICATION_MESSAGE', ''), // Leave empty '' to enable error log triggered alarm
     
     // Slack webhook url for log alarm
     'slack_webhook_url' => env('LA_SLACK_WEBHOOK_URL', ''),
 
     // notification email address for log alarm
-    'notification_email' => env('LA_NOTIFICATION_EMAIL', 'admin@example.com,admin2@example.com'),
+    'notification_email' => env('LA_NOTIFICATION_EMAIL', 'admin@example.com'), // also possible: 'admin@example.com,admin2@example.com'
 
     // notification email subject for log alarm
     'notification_email_subject' => env('LA_NOTIFICATION_EMAIL_SUBJECT', 'Log Alarm Notification'),

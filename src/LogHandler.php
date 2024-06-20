@@ -60,7 +60,7 @@ class LogHandler
         // If the specific string is found, strpos() returns the position of the first occurrence
         // of the specific string within the message. If the specific string is not found,
         // strpos() returns false.
-        return strpos($message, $specificString) !== false;
+        return empty($specificString) ? true : strpos($message, $specificString) !== false;
     }
     
     /**
@@ -91,6 +91,9 @@ class LogHandler
         // Get the time in minutes to consider an error log as recent
         $log_time_frame = config('log-alarm.log_time_frame');
 
+        // Get specified number of error logs in time frame
+        $log_per_time_frame = config('log-alarm.log_per_time_frame');
+
         // Filter out logs that are older than the specified time frame
         $errorLogs = array_filter($errorLogs, function ($timestamp) use ($log_time_frame) {
             return $timestamp >=  Carbon::now()->subMinutes($log_time_frame);
@@ -100,7 +103,7 @@ class LogHandler
         Cache::put($log_alarm_cache_key_enc, $errorLogs, Carbon::now()->addMinutes($log_time_frame)); 
 
         // Check if there have been a specified number of error logs in time frame (in the last minute for example)
-        if (count($errorLogs) >= config('log-alarm.log_per_time_frame')) {
+        if (count($errorLogs) >= $log_per_time_frame) {
             
             // Retrieve the time of the last notification from the cache or initialize null if no notification time exists
             $last_notification_time = Cache::get($this->notification_cache_key.'_'.$log_alarm_cache_key_enc);
@@ -114,6 +117,8 @@ class LogHandler
                 
                 // Get the message to be sent in the notification from the config file
                 $message = empty(config('log-alarm.notification_message')) ? $log_message : config('log-alarm.notification_message');
+
+                $message = "The Error was occurred {$log_per_time_frame} times in the last {$log_time_frame} minutes: \r\n\r\n{$message}";
 
                 // Send the notification
                 NotificationService::send($message);
