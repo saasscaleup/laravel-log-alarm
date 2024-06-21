@@ -104,17 +104,13 @@ php artisan tinker
 \Log::error('Log alarm');
 ```
 
-After the fifth error log message, email and slack notification will be sent! 
+After the fifth error log message, email and slack notification will be sent! (Email example)
 
 ```
 From: Laravel <hello@example.com>
 To: admin@example.com, admin2@example.com
 Subject: Log Alarm Notification
-Message-ID: <8d5fc12bc4c03f4a22965130577bdabb@example.com>
-MIME-Version: 1.0
-Date: Thu, 20 Jun 2024 20:38:59 +0000
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+
 
 The Error was occurred 5 times in the last 1 minutes:
 
