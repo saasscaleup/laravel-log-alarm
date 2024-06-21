@@ -76,13 +76,49 @@ php artisan vendor:publish --provider="Saasscaleup\LogAlarm\LogAlarmServiceProvi
 ```
 
 ## Usage
-The package will automatically start listening to your application's log events. Customize the settings in the config/log-alarm.php file to match your requirements.
+The package will automatically start listening to your application's log events. Customize the settings in the `config/log-alarm.php` file to match your requirements.
 For Example:
 
 ```
 LA_SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/webhook/url
 LA_NOTIFICATION_EMAIL=your-email@example.com
 LA_NOTIFICATION_EMAIL_SUBJECT="Log Alarm Notification"
+```
+
+In order to trigger the Log Alarm with the current defualt setting, All you need to do is 
+
+1. Add your `LA_SLACK_WEBHOOK_URL` and  `LA_NOTIFICATION_EMAIL` 
+2. Print Error log 5 times in `tinker` or in your `Controller`
+
+### Tinker example:
+
+```
+php artisan tinker
+```
+
+```
+\Log::error('Log alarm');
+\Log::error('Log alarm');
+\Log::error('Log alarm');
+\Log::error('Log alarm');
+\Log::error('Log alarm');
+```
+
+After the fifth error log message, email and slack notification will be sent! 
+
+```
+From: Laravel <hello@example.com>
+To: admin@example.com, admin2@example.com
+Subject: Log Alarm Notification
+Message-ID: <8d5fc12bc4c03f4a22965130577bdabb@example.com>
+MIME-Version: 1.0
+Date: Thu, 20 Jun 2024 20:38:59 +0000
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+The Error was occurred 5 times in the last 1 minutes:
+
+LOG_LEVEL: error | LOG_MESSAGE: Log alarm
 ```
 
 
