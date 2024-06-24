@@ -2,7 +2,7 @@
 
 <h1 align="center">Real-time Log Monitoring and Error Detection for Your Laravel Applications</h1>
 
-<!--h4 align="center">
+<h4 align="center">
   <a href="https://youtube.com/@ScaleUpSaaS">Youtube</a>
   <span> · </span>
   <a href="https://twitter.com/ScaleUpSaaS">Twitter</a>
@@ -10,7 +10,7 @@
   <a href="https://facebook.com/ScaleUpSaaS">Facebook</a>
   <span> · </span>
   <a href="https://buymeacoffee.com/scaleupsaas">By Me a Coffee</a>
-</h4-->
+</h4>
 
 <p align="center">
    <a href="https://packagist.org/packages/saasscaleup/laravel-log-alarm">
