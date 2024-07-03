@@ -2,6 +2,27 @@
     "name": "saasscaleup/laravel-log-alarm",
     "description": "Laravel log Alarm help you to set up alarm when errors occur in your system and send you a notification via Slack and email",
     "license": "MIT",
+    "homepage": "https://github.com/saasscaleup/laravel-log-alarm",
+    "keywords": [
+        "laravel",
+        "log",
+        "alarm",
+        "error",
+        "notification",
+        "slack",
+        "email",
+        "logging",
+        "monitoring",
+        "alert",
+        "laravel-log",
+        "laravel-error",
+        "laravel-notification",
+        "laravel-slack",
+        "laravel-email",
+        "laravel-monitoring",
+        "laravel-alert",
+        "laravel alarm"
+    ],
     "autoload": {
         "psr-4": {
             "Saasscaleup\\LogAlarm\\": "src/"
