@@ -54,8 +54,24 @@ class NotificationService
             return;
         }
 
-        // Prepare the data to be sent in the request body
-        $data = ['text' => $message];
+        // Prepare the data for the request
+        $data = [
+            'text' => config('log-alarm.notification_email_subject') ,
+            'attachments' => [
+                [
+                    'title' => config('log-alarm.notification_email_subject'),
+                    'text' => $message,
+                    'color' => '#FF0000',
+                    'fields' => [
+                        [
+                            'title' => 'Priority',
+                            'value' => 'High',
+                            'short' => true
+                        ]
+                    ]
+                ]
+            ]
+        ];
 
         // Initialize the cURL session
         $ch = curl_init($webhookUrl);
