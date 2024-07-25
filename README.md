@@ -14,15 +14,15 @@
 
 <p align="center">
    <a href="https://packagist.org/packages/saasscaleup/laravel-log-alarm">
-      <img src="https://poser.pugx.org/saasscaleup/laravel-log-alarm/v/stable.png" alt="Latest Stable Version">
+      <img src="https://img.shields.io/packagist/v/saasscaleup/laravel-log-alarm.svg?style=flat-square" alt="Latest Stable Version">
   </a>
 
   <a href="https://packagist.org/packages/saasscaleup/laravel-log-alarm">
-      <img src="https://poser.pugx.org/saasscaleup/laravel-log-alarm/downloads.png" alt="Total Downloads">
+      <img src="https://img.shields.io/packagist/dt/saasscaleup/laravel-log-alarm.svg?style=flat-square" alt="Total Downloads">
   </a>
 
   <a href="https://packagist.org/packages/saasscaleup/laravel-log-alarm">
-    <img src="https://poser.pugx.org/saasscaleup/laravel-log-alarm/license.png" alt="License">
+    <img src="https://img.shields.io/packagist/l/saasscaleup/laravel-log-alarm.svg?style=flat-square" alt="License">
   </a>
 </p>
 
