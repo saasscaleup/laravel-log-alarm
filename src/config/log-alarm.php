@@ -26,6 +26,10 @@ return [
     // Slack webhook url for log alarm
     'slack_webhook_url' => env('LA_SLACK_WEBHOOK_URL', ''),
 
+    
+    // Discord webhook url for log alarm
+    'discord_webhook_url' => env('LA_DISCORD_WEBHOOK_URL', ''),
+
     // notification email address for log alarm
     'notification_email' => env('LA_NOTIFICATION_EMAIL', 'admin@example.com'), // also possible: 'admin@example.com,admin2@example.com'
 
