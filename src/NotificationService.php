@@ -4,6 +4,7 @@ namespace Saasscaleup\LogAlarm;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 
 
 class NotificationService
@@ -24,6 +25,15 @@ class NotificationService
          * @return void
          */
         self::sendSlackNotification($message);
+
+        // Send Discord notification
+        /**
+         * Send a notification to Discord.
+         *
+         * @param string $message The message to be sent.
+         * @return void
+         */
+        self::sendDiscordNotification($message);
         
         // Send email notification
         /**
@@ -127,6 +137,54 @@ class NotificationService
         } catch (\Exception $e) {
             // If the email sending fails, log the error
             Log::info("LogAlarm::sendEmailNotification->error: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Send a notification to Discord.
+     *
+     * This function sends a message to a Discord channel via a webhook URL.
+     *
+     * @param string $message The message to be sent.
+     * @return void
+     */
+    public static function sendDiscordNotification($message)
+    {
+        // Get the webhook URL from the configuration
+        $webhookUrl = config('log-alarm.discord_webhook_url');
+
+        // If the webhook URL is not configured, return without sending the notification
+        if (empty($webhookUrl)) {
+            return;
+        }
+
+        // Prepare the data for the request
+        $data = [
+            'embeds' => [
+                [
+                    'title' => config('log-alarm.notification_email_subject'),
+                    'description' => $message,
+                    'color' => 16711680, // Red color in decimal
+                    'fields' => [
+                        [
+                            'name' => 'Priority',
+                            'value' => 'High',
+                            'inline' => true
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        try {
+            // Send the request using HTTP facade
+            $response = Http::post($webhookUrl, $data);
+
+            if (!$response->successful()) {
+                Log::info("LogAlarm::sendDiscordNotification->error: " . $response->body());
+            }
+        } catch (\Exception $e) {
+            Log::info("LogAlarm::sendDiscordNotification->error: " . $e->getMessage());
         }
     }
 }
