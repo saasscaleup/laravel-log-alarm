@@ -113,7 +113,6 @@ class LogHandler
         // Get the log alarm message
         $log_message = $this->getLogAlarmMessage($event);
         
-        dd($log_message);
         // Generate a unique cache key based on the log message
         $log_alarm_cache_key_enc = md5($log_message);
         
