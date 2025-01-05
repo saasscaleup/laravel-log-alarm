@@ -45,14 +45,14 @@ In today's fast-paced digital environment, timely responses to application issue
 
 ## Requirements
 
- - PHP >= 7
- - Laravel >= 5
+- PHP >= 7
+- Laravel >= 5
 
 ## ⬇️ Installation
 
 Install the package via Composer:
 
-``` bash
+```bash
 composer require saasscaleup/laravel-log-alarm
 ```
 
@@ -68,7 +68,6 @@ Saasscaleup\LogAlarm\LogAlarmServiceProvider::class,
 
 ### Publish package's config file
 
-
 Publish package's config, migration and view files by running below command:
 
 ```bash
@@ -76,6 +75,7 @@ php artisan vendor:publish --provider="Saasscaleup\LogAlarm\LogAlarmServiceProvi
 ```
 
 ## Usage
+
 The package will automatically start listening to your application's log events. Customize the settings in the `config/log-alarm.php` file to match your requirements.
 For Example:
 
@@ -85,10 +85,59 @@ LA_NOTIFICATION_EMAIL=your-email@example.com
 LA_NOTIFICATION_EMAIL_SUBJECT="Log Alarm Notification"
 ```
 
-In order to trigger the Log Alarm with the current defualt setting, All you need to do is 
+In order to trigger the Log Alarm with the current defualt setting, All you need to do is
 
-1. Add your `LA_SLACK_WEBHOOK_URL` and  `LA_NOTIFICATION_EMAIL` 
+1. Add your `LA_SLACK_WEBHOOK_URL` and `LA_NOTIFICATION_EMAIL`
 2. Print Error log 5 times in `tinker` or in your `Controller`
+
+## Telegram Notification Configuration
+
+Add `LA_TELEGRAM_BOT_TOKEN` and `LA_TELEGRAM_CHAT_ID` to your `.env`
+
+### Getting a Bot Token:
+
+1. Open Telegram and search for `@BotFather`
+2. Start a chat with BotFather and send `/newbot`
+3. Follow the prompts:
+
+- Provide a name for your bot
+- Provide a username for your bot (must end in 'bot'). Example: `MyTelegramBot` or `my_telegram_bot`
+
+4. BotFather will give you a bot token that looks like this: `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`
+
+### Getting the Chat ID:
+
+#### Method 1 (For Direct Messages):
+
+1. Start a chat with your new bot
+2. Send it any message
+3. Visit this URL in your browser (replace with your bot token):
+
+```
+https://api.telegram.org/bot<YourBotTokenHere>/getUpdates
+```
+
+4. Look for the "chat" -> "id" field in the JSON response. It will be a number like `123456789`.
+
+```json
+"chat": {
+    "id": 123456789,
+},
+```
+
+#### Method 2 (For Groups):
+
+1. Add your bot to the group
+2. Send a message in the group
+3. Use the same /getUpdates URL method above
+4. Look for "chat" -> "id" in the response. For groups, it will be a negative number like -123456789
+
+#### Important Tips:
+
+Keep your bot token secret - anyone with it can control your bot
+For groups, make sure to give the bot permission to read messages
+If you don't see any updates in the /getUpdates response, send a new message to the bot or group
+The chat ID is permanent for that chat or group unless the bot is removed and re-added
 
 ### Tinker example:
 
@@ -117,10 +166,10 @@ The Error was occurred 5 times in the last 1 minutes:
 LOG_LEVEL: error | LOG_MESSAGE: Log alarm
 ```
 
-
 ## 🔧 Configuration
 
 Update your `.env` file with the following environment variables:
+
 ```
 LA_ENABLED=true
 LA_LOG_TYPE=error
@@ -148,7 +197,7 @@ return [
     // log time frame - log time frame to listen - in minutes
     "log_time_frame" => env('LA_LOG_TIME_FRAME', 1),
 
-    // log per time frame - How many log to count per time frame until alarm trigger 
+    // log per time frame - How many log to count per time frame until alarm trigger
     "log_per_time_frame" => env('LA_LOG_PER_TIME_FRAME', 5),
 
     // delay between alarms in minutes - How many minutes to delay between alarms
@@ -159,7 +208,7 @@ return [
 
     // notification message for log alarm
     'notification_message' => env('LA_NOTIFICATION_MESSAGE', 'Log Alarm got triggered!'),
-    
+
     // Slack webhook url for log alarm
     'slack_webhook_url' => env('LA_SLACK_WEBHOOK_URL', ''),
 
@@ -176,29 +225,25 @@ return [
 ![banner](https://github.com/saasscaleup/laravel-log-alarm/blob/master/lcl-demo.gif?raw=true)
 <br>
 
-
 ## Contribution
+
 We welcome contributions! Please feel free to submit a Pull Request or open an Issue on GitHub.
 
-
 ## License
+
 This package is open-sourced software licensed under the [MIT](license.md) license.
 
-
-
 ## Support 🙏😃
-  
- If you Like the tutorial and you want to support my channel so I will keep releasing amzing content that will turn you to a desirable Developer with Amazing Cloud skills... I will realy appricite if you:
- 
- 1. Subscribe to our [youtube](http://www.youtube.com/@ScaleUpSaaS?sub_confirmation=1)
- 2. Buy me A [coffee ❤️](https://www.buymeacoffee.com/scaleupsaas)
+
+If you Like the tutorial and you want to support my channel so I will keep releasing amzing content that will turn you to a desirable Developer with Amazing Cloud skills... I will realy appricite if you:
+
+1.  Subscribe to our [youtube](http://www.youtube.com/@ScaleUpSaaS?sub_confirmation=1)
+2.  Buy me A [coffee ❤️](https://www.buymeacoffee.com/scaleupsaas)
 
 Thanks for your support :)
 
 <a href="https://www.buymeacoffee.com/scaleupsaas"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=scaleupsaas&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
-
 <hr>
-
 
 Enhance your Laravel application's monitoring capabilities today with Log Alarm. Get started by installing the package and experience improved error management and faster response times.

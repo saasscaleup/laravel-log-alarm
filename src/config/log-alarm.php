@@ -35,4 +35,8 @@ return [
 
     // notification email subject for log alarm
     'notification_email_subject' => env('LA_NOTIFICATION_EMAIL_SUBJECT', 'Log Alarm Notification'),
+
+    // Telegram Bot notification
+    'telegram_bot_token' => env('LA_TELEGRAM_BOT_TOKEN', ''),
+    'telegram_chat_id' => env('LA_TELEGRAM_CHAT_ID', ''),
 ];

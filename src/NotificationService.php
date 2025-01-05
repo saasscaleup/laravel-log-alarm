@@ -43,6 +43,15 @@ class NotificationService
          * @return void
          */
         self::sendEmailNotification($message);
+
+        // Send Telegram notification
+        /**
+         * Send a notification to telegram.
+         *
+         * @param string $message The message to be sent.
+         * @return void
+         */
+        self::sendTelegramNotification($message);
     }
 
 
@@ -185,6 +194,53 @@ class NotificationService
             }
         } catch (\Exception $e) {
             Log::info("LogAlarm::sendDiscordNotification->error: " . $e->getMessage());
+        }
+    }
+
+     /**
+     * Send a notification to Telegram.
+     *
+     * This function sends a message to a Telegram chat via the Telegram Bot API.
+     *
+     * @param string $message The message to be sent.
+     * @return void
+     */
+    public static function sendTelegramNotification($message)
+    {
+        // Get the bot token and chat ID from the configuration
+        $botToken = config('log-alarm.telegram_bot_token');
+        $chatId = config('log-alarm.telegram_chat_id');
+
+        // If either the bot token or chat ID is not configured, return without sending the notification
+        if (empty($botToken) || empty($chatId)) {
+            return;
+        }
+
+        // Prepare the message text with formatting
+        $text = "*" . config('log-alarm.notification_email_subject') . "*\n\n" .
+                $message . "\n\n" .
+                "*Priority:* High";
+
+        // Prepare the data for the request
+        $data = [
+            'chat_id' => $chatId,
+            'text' => $text,
+            'parse_mode' => 'Markdown',
+            'disable_web_page_preview' => true
+        ];
+
+        // Construct the API URL
+        $apiUrl = "https://api.telegram.org/bot{$botToken}/sendMessage";
+
+        try {
+            // Send the request using HTTP facade
+            $response = Http::post($apiUrl, $data);
+
+            if (!$response->successful()) {
+                Log::info("LogAlarm::sendTelegramNotification->error: " . $response->body());
+            }
+        } catch (\Exception $e) {
+            Log::info("LogAlarm::sendTelegramNotification->error: " . $e->getMessage());
         }
     }
 }
