@@ -221,11 +221,18 @@ class NotificationService
                 $message . "\n\n" .
                 "*Priority:* High";
 
+        // Specifically escape underscores, dashes, and parentheses for MarkdownV2
+        // For instance, an error with SQL connection like SQLSTATE[HY000] [1049] Unknown database 'db_name_v3' (Connection: mysql, SQL: select `uuid`, `name`, `logo`, `school_type` from `sekolahs` where `uuid` is null limit 1) would result in a Bad Request error.
+
+        $text = preg_replace_callback('/[_\-\(\)]/', function($matches) {
+            return '\\' . $matches[0]; // Escape _, -, (, and )
+        }, $text);
+
         // Prepare the data for the request
         $data = [
             'chat_id' => $chatId,
             'text' => $text,
-            'parse_mode' => 'Markdown',
+            'parse_mode' => 'MarkdownV2',
             'disable_web_page_preview' => true
         ];
 
