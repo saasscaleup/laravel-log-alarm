@@ -64,6 +64,39 @@ class LogHandler
     }
     
     /**
+     * Constructs a detailed log alarm message from a MessageLogged event.
+     *
+     * This method extracts information such as the log level, log message,
+     * file, and line number from the provided MessageLogged event. If an
+     * exception is present in the event's context, the file and line number
+     * are retrieved from the exception; otherwise, they default to 'Unknown'.
+     *
+     * @param MessageLogged $event The log event containing details such as
+     *                             level, message, and context.
+     * @return string A formatted string containing the log level, message,
+     *                file, and line number.
+     */
+    protected function getLogAlarmMessage(MessageLogged $event){
+
+        $log_level = $event->level;
+        $log_message = $event->message;
+        $log_file = 'Unknown file';
+        $log_line = 'Unknown line';
+
+        try {
+            // Check if 'exception' exists in the context
+            if (isset($event->context['exception']) && $event->context['exception'] instanceof \Exception) {
+                $exception = $event->context['exception'];
+                $log_file = $exception->getFile();
+                $log_line = $exception->getLine();
+            }
+        } catch (\Exception $e) {
+            // Do nothing
+        }
+
+        return "LOG_LEVEL: {$log_level}\r\nLOG_MESSAGE: {$log_message}\r\nLOG_FILE: {$log_file}\r\nLOG_LINE: {$log_line}";
+    }
+    /**
      * logError
      *
      * This method handles the logging of an error. It retrieves the current error logs
@@ -77,9 +110,11 @@ class LogHandler
      */
     protected function logError(MessageLogged $event)
     {
-
-        $log_message =  'LOG_LEVEL: '.$event->level.' | LOG_MESSAGE: '.$event->message;
-
+        // Get the log alarm message
+        $log_message = $this->getLogAlarmMessage($event);
+        
+        dd($log_message);
+        // Generate a unique cache key based on the log message
         $log_alarm_cache_key_enc = md5($log_message);
         
         // Retrieve the current error logs from the cache or initialize an empty array if no logs exist
