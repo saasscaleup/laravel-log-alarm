@@ -4,6 +4,7 @@ namespace Saasscaleup\LogAlarm;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 
 
 class NotificationService
@@ -24,6 +25,15 @@ class NotificationService
          * @return void
          */
         self::sendSlackNotification($message);
+
+        // Send Discord notification
+        /**
+         * Send a notification to Discord.
+         *
+         * @param string $message The message to be sent.
+         * @return void
+         */
+        self::sendDiscordNotification($message);
         
         // Send email notification
         /**
@@ -33,6 +43,15 @@ class NotificationService
          * @return void
          */
         self::sendEmailNotification($message);
+
+        // Send Telegram notification
+        /**
+         * Send a notification to telegram.
+         *
+         * @param string $message The message to be sent.
+         * @return void
+         */
+        self::sendTelegramNotification($message);
     }
 
 
@@ -127,6 +146,101 @@ class NotificationService
         } catch (\Exception $e) {
             // If the email sending fails, log the error
             Log::info("LogAlarm::sendEmailNotification->error: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Send a notification to Discord.
+     *
+     * This function sends a message to a Discord channel via a webhook URL.
+     *
+     * @param string $message The message to be sent.
+     * @return void
+     */
+    public static function sendDiscordNotification($message)
+    {
+        // Get the webhook URL from the configuration
+        $webhookUrl = config('log-alarm.discord_webhook_url');
+
+        // If the webhook URL is not configured, return without sending the notification
+        if (empty($webhookUrl)) {
+            return;
+        }
+
+        // Prepare the data for the request
+        $data = [
+            'embeds' => [
+                [
+                    'title' => config('log-alarm.notification_email_subject'),
+                    'description' => $message,
+                    'color' => 16711680, // Red color in decimal
+                    'fields' => [
+                        [
+                            'name' => 'Priority',
+                            'value' => 'High',
+                            'inline' => true
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        try {
+            // Send the request using HTTP facade
+            $response = Http::post($webhookUrl, $data);
+
+            if (!$response->successful()) {
+                Log::info("LogAlarm::sendDiscordNotification->error: " . $response->body());
+            }
+        } catch (\Exception $e) {
+            Log::info("LogAlarm::sendDiscordNotification->error: " . $e->getMessage());
+        }
+    }
+
+     /**
+     * Send a notification to Telegram.
+     *
+     * This function sends a message to a Telegram chat via the Telegram Bot API.
+     *
+     * @param string $message The message to be sent.
+     * @return void
+     */
+    public static function sendTelegramNotification($message)
+    {
+        // Get the bot token and chat ID from the configuration
+        $botToken = config('log-alarm.telegram_bot_token');
+        $chatId = config('log-alarm.telegram_chat_id');
+
+        // If either the bot token or chat ID is not configured, return without sending the notification
+        if (empty($botToken) || empty($chatId)) {
+            return;
+        }
+
+        // Prepare the message text with formatting
+        $text = "*" . config('log-alarm.notification_email_subject') . "*\n\n" .
+                $message . "\n\n" .
+                "*Priority:* High";
+
+        // Prepare the data for the request
+        $data = [
+            'chat_id' => $chatId,
+            'text' => $text,
+            'parse_mode' => 'Markdown',
+            'disable_web_page_preview' => true
+        ];
+
+        // Construct the API URL
+        $apiUrl = "https://api.telegram.org/bot{$botToken}/sendMessage";
+
+        try {
+            // Send the request using HTTP facade
+            $response = Http::post($apiUrl, $data);
+
+            if (!$response->successful()) {
+                Log::info("LogAlarm::sendTelegramNotification->error: " . $response->body());
+            }
+        } catch (\Exception $e) {
+            Log::info("LogAlarm::sendTelegramNotification->error: " . $e->getMessage());
         }
     }
 }
