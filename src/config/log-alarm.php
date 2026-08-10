@@ -39,4 +39,5 @@ return [
     // Telegram Bot notification
     'telegram_bot_token' => env('LA_TELEGRAM_BOT_TOKEN', ''),
     'telegram_chat_id' => env('LA_TELEGRAM_CHAT_ID', ''),
+    'telegram_message_thread_id' => env('LA_TELEGRAM_THREAD_ID', ''),
 ];

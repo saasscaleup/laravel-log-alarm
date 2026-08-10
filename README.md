@@ -139,6 +139,13 @@ For groups, make sure to give the bot permission to read messages
 If you don't see any updates in the /getUpdates response, send a new message to the bot or group
 The chat ID is permanent for that chat or group unless the bot is removed and re-added
 
+##### Send message to specific topic:
+
+1. Open topic in the group chat
+2. Right click on any message in the topic and copy message link
+3. Link will have format like `https://t.me/c/1234567890/<thread_id>/<message_id>`
+4. Add `LA_TELEGRAM_THREAD_ID` to your `.env`
+
 ### Tinker example:
 
 ```

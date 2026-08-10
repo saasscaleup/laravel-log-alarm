@@ -210,6 +210,8 @@ class NotificationService
         // Get the bot token and chat ID from the configuration
         $botToken = config('log-alarm.telegram_bot_token');
         $chatId = config('log-alarm.telegram_chat_id');
+        $messageThreadId = config('log-alarm.telegram_message_thread_id');
+
 
         // If either the bot token or chat ID is not configured, return without sending the notification
         if (empty($botToken) || empty($chatId)) {
@@ -228,6 +230,10 @@ class NotificationService
             'parse_mode' => 'Markdown',
             'disable_web_page_preview' => true
         ];
+
+        if ($messageThreadId) {
+            $data['message_thread_id'] = $messageThreadId;
+        }
 
         // Construct the API URL
         $apiUrl = "https://api.telegram.org/bot{$botToken}/sendMessage";
