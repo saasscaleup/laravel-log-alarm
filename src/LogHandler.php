@@ -94,7 +94,9 @@ class LogHandler
             // Do nothing
         }
 
-        return "LOG_LEVEL: {$log_level}\r\nLOG_MESSAGE: {$log_message}\r\nLOG_FILE: {$log_file}\r\nLOG_LINE: {$log_line}";
+        // Return a formatted string containing the log level, message, file, and line number
+        // Use spaces instead underscores to avoid formatting issues in Slack, Telegram or any using markdown formatting messages
+        return "LOG LEVEL: {$log_level}\r\nLOG MESSAGE: {$log_message}\r\nLOG FILE: {$log_file}\r\nLOG LINE: {$log_line}";
     }
     /**
      * logError
