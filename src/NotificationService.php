@@ -135,8 +135,8 @@ class NotificationService
         }
 
         // Split the email addresses into an array
-        $to_emails = explode(',', $to);
-
+        $to_emails = array_map('trim', explode(',', $to));
+        
         try {
             // Send the email notification
             Mail::raw($message, function ($msg) use ($to_emails) {
